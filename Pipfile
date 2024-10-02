@@ -17,6 +17,7 @@ django-ckeditor-5 = "*"
 gunicorn = "*"
 whitenoise = "*"
 psycopg2-binary = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
