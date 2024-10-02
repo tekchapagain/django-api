@@ -10,6 +10,13 @@ django-cors-headers = "*"
 pillow = "*"
 shortuuid = "*"
 django-ckeditor = "*"
+python-dotenv = "*"
+django-storages = "*"
+boto3 = "*"
+django-ckeditor-5 = "*"
+psycopg2 = "*"
+gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 

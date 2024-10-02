@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Review
-from .models import Product, ProductImages, Contact
+from .models import Product, ProductImages, Contact, Category
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImages
@@ -16,6 +16,8 @@ class ProductAdmin(admin.ModelAdmin):
             # Assuming you want to show the first image
             return mark_safe(f'<img src="{obj.images.first().image.url}" width="50" height="50" />')
         return "No image"
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'image')
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('product', 'user', 'rating', 'created_at', 'updated_at')
@@ -31,3 +33,4 @@ class ContactAdmin(admin.ModelAdmin):
 
 admin.site.register(Product,ProductAdmin,)
 admin.site.register(Review, ReviewAdmin)
+admin.site.register(Category,CategoryAdmin)
