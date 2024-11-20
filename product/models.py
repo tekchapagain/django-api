@@ -42,8 +42,8 @@ class Product(models.Model):
         return average if average is not None else 0.0
     
 class ProductImages(models.Model):
-	images = models.ImageField(upload_to="product-images", default="product.jpg")
-	product = models.ForeignKey(Product, related_name="p_images", on_delete=models.SET_NULL, null=True)
+	images = models.ImageField(storage=PublicMediaStorage(), default="product.jpg")
+	product = models.ForeignKey(Product, related_name="additionalImages", on_delete=models.SET_NULL, null=True)
 	date = models.DateTimeField(auto_now_add=True)
 
 	class Meta:

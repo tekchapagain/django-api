@@ -20,7 +20,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImages
-        fields = ['image']  
+        fields = ['images']  
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
@@ -49,12 +49,12 @@ class ProductSerializer(serializers.ModelSerializer):
     
 
 class ProductDetailSerializer(serializers.ModelSerializer):
-    images = ProductImageSerializer(many=True, read_only=True)
+    additionalImages = ProductImageSerializer(many=True, read_only=True)
     reviews = ReviewSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'price', 'category', 'image','images', 'stock', 'discount', 'is_recommended', 'is_trending','reviews_count','average_rating', 'reviews']
+        fields = ['id', 'name', 'description', 'price', 'category', 'image','additionalImages', 'stock', 'discount', 'is_recommended', 'is_trending','reviews_count','average_rating', 'reviews']
 
 
 class ContactSerializer(serializers.ModelSerializer):

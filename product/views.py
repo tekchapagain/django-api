@@ -1,12 +1,13 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
+from django.utils.decorators import method_decorator
 from rest_framework import status
 from django.db.models import Q
 from .models import Product, Category, Review
 from rest_framework.pagination import PageNumberPagination
 from .serializers import ProductSerializer, CategorySerializer,\
 ReviewSerializer, ProductDetailSerializer, ContactSerializer
-
+from django.views.decorators.cache import cache_page
 
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -64,6 +65,7 @@ class CustomPagination(PageNumberPagination):
     def get_last_page_link(self):
         return self.request.build_absolute_uri(self.request.path) + f'?page={self.page.paginator.num_pages}'
 
+@method_decorator(cache_page(900), name='dispatch')
 class ProductListAllView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -125,10 +127,12 @@ class ProductListView(generics.ListCreateAPIView):
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+@method_decorator(cache_page(900), name='dispatch')
 class NewArrivalsView(generics.ListAPIView):
     queryset = Product.objects.order_by('-id')[:10]  # Adjust as needed
     serializer_class = ProductSerializer
 
+@method_decorator(cache_page(900), name='dispatch')
 class RecommendedView(generics.ListAPIView):
     # You can implement your logic for recommended products here
     queryset = Product.objects.filter(is_recommended=True)  # Adjust your condition
@@ -140,7 +144,8 @@ class RecommendedView(generics.ListAPIView):
         
         # Nest the data under 'data' key
         return Response({'data': response.data})
-
+    
+@method_decorator(cache_page(900), name='dispatch')
 class TrendingView(generics.ListAPIView):
     # Implement your logic for trending products
     queryset = Product.objects.filter(is_trending=True)  # Adjust your condition
@@ -184,7 +189,7 @@ class ProductsByCategoryView(generics.ListAPIView):
         # Customize the response structure
         return Response({'data': serializer.data})
     
-
+@method_decorator(cache_page(3600), name='dispatch')
 class CategoryListView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
