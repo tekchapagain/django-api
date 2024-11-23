@@ -72,7 +72,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',           # Frontend running on localhost
-    'https://yourfrontenddomain.com',  # Your production frontend domain
+    'https://niceclickllc.vercel.app',  # Your production frontend domain
 ]
 
 CORS_ALLOW_METHODS = [
